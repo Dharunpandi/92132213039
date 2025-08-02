@@ -7,8 +7,8 @@ import {
 
 const shortrouter = express.Router();
 
-shortrouter.post('/shorturls', postShortUrl); // POST endpoint
-shortrouter.get('/shorturls/:shortcode', getShortUrlStats); // stats
-shortrouter.get('/:shortcode', redirectShortcode); // redirect
+shortrouter.post('/shorturls', postShortUrl);       
+shortrouter.get('/shorturls/:shortcode', getShortUrlStats); 
+shortrouter.get('/:shortcode', redirectShortcode);    
 
 export default shortrouter;

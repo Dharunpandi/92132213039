@@ -1,5 +1,3 @@
-
-
 export function generateShortcode(length = 6) {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let shortcode = '';

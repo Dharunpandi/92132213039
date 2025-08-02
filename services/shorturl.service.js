@@ -1,4 +1,4 @@
-import { generateShortcode } from "../utils/generateCode.js";
+import { generateShortcode } from '../utils/generateCode.js';
 
 const db = new Map();
 const stats = new Map();
