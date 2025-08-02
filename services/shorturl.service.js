@@ -1,7 +1,8 @@
 import { generateShortcode } from '../utils/generateCode.js';
 
-const db = new Map();
-const stats = new Map();
+const db = new Map();    
+const stats = new Map();  
+
 
 export function createShortUrl({ url, validity = 30, shortcode }) {
   if (!url) throw { status: 400, message: 'URL is required' };
@@ -14,30 +15,38 @@ export function createShortUrl({ url, validity = 30, shortcode }) {
     throw { status: 409, message: 'Shortcode already exists' };
   }
 
-  const createdAt = new Date().toISOString();
-  const expiry = new Date(Date.now() + validity * 60000).toISOString();
+  const createdAt = new Date();
+  const expiry = new Date(Date.now() + validity * 60000);
 
-  db.set(shortcode, { url, shortcode, createdAt, expiry });
+  db.set(shortcode, {
+    url,
+    shortcode,
+    createdAt: createdAt.toISOString(),
+    expiry: expiry.toISOString(),
+  });
+
   stats.set(shortcode, []);
 
   return {
     shortLink: `http://localhost:3000/${shortcode}`,
-    expiry,
+    expiry: expiry.toISOString(),
   };
 }
-
 export function getOriginalUrl(shortcode) {
   const record = db.get(shortcode);
   if (!record) throw { status: 404, message: 'Shortcode not found' };
 
-  const now = new Date().toISOString();
-  if (now > record.expiry) throw { status: 410, message: 'Shortcode expired' };
+  if (Date.now() > new Date(record.expiry).getTime()) {
+    throw { status: 410, message: 'Shortcode expired' };
+  }
 
   return record.url;
 }
 
+
 export function logClick(shortcode, req) {
   if (!stats.has(shortcode)) stats.set(shortcode, []);
+
   stats.get(shortcode).push({
     timestamp: new Date().toISOString(),
     referrer: req.get('Referrer') || 'N/A',

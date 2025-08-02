@@ -1,14 +1,10 @@
 import express from 'express';
-import {
-  postShortUrl,
-  redirectShortcode,
-  getShortUrlStats,
-} from '../controllers/shorturl.controller.js';
+import { createShortUrl, redirectShortUrl, getAllUrls } from '../controllers/shorturl.controller.js';
 
 const shortrouter = express.Router();
 
-shortrouter.post('/shorturls', postShortUrl);       
-shortrouter.get('/shorturls/:shortcode', getShortUrlStats); 
-shortrouter.get('/:shortcode', redirectShortcode);    
+shortrouter.post('/shorten', createShortUrl);
+shortrouter.get('/urls', getAllUrls);
+shortrouter.get('/:shortcode', redirectShortUrl);
 
 export default shortrouter;

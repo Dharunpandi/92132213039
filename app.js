@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 
-import shorturlRouter from './routes/shorturl.routes.js';
+import shortrouter from './routes/shorturl.routes.js';
 import logrouter from './routes/logRoutes.js';
 
 dotenv.config();
@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 
 
-app.use('/', shorturlRouter);
+app.use('/', shortrouter);
 app.use('/', logrouter);
 
 app.get('/', (req, res) => {
